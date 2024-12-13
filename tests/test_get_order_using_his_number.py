@@ -16,10 +16,10 @@ class TestGetOrder:
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
     def test_error_message_after_request_without_track_id(self):
         new_order = requests.get(f"https://qa-scooter.praktikum-services.ru/api/v1/orders/track?t=")
-        assert new_order.status_code == 400
+        assert "Недостаточно данных для поиска" in new_order.json()["message"]
 
     @allure.title("Отображается сообщение об ошибке после запроса c некорректным id")
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
     def test_error_message_after_request_with_not_correct_track_id(self):
         new_order = requests.get(f"https://qa-scooter.praktikum-services.ru/api/v1/orders/track?t=9999999")
-        assert new_order.status_code == 404
+        assert "Заказ не найден" in new_order.json()["message"]

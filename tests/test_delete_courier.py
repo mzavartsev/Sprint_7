@@ -7,7 +7,7 @@ class TestDeleteCourier:
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
     def test_error_message_after_unsuccessful_request(self):
         delete_courier = requests.delete(f"{BASE_URL}/api/v1/courier/9999999")
-        assert delete_courier.status_code == 404
+        assert "Курьера с таким id нет" in delete_courier.json()["message"]
 
     @allure.title("Отображается корректное сообщение успеха")
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
@@ -21,5 +21,5 @@ class TestDeleteCourier:
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
     def test_return_error_message_after_delete_without_required_field(self):
         delete_courier = requests.delete(f"{BASE_URL}/api/v1/courier/")
-        assert delete_courier.status_code == 404
+        assert "Not Found" in delete_courier.json()["message"]
 
