@@ -11,7 +11,7 @@ class TestsCreateCourier:
         courier_id = CourierMethods(return_correct_creds_for_new_courier).post_login_courier()
         CourierMethods(return_correct_creds_for_new_courier).delete_courier(courier_id[1]["id"])
         with allure.step("Проверка статус кода после создания курьера"):
-            assert 201 == new_courier[0]
+            assert new_courier[0] == 201
 
     @allure.title("Создание курьера с указанием уже использованных кредов")
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
@@ -30,7 +30,7 @@ class TestsCreateCourier:
         courier_id = CourierMethods(return_correct_creds_for_new_courier).post_login_courier()
         CourierMethods(return_correct_creds_for_new_courier).delete_courier(courier_id[1]["id"])
         with allure.step("Проверка отображения сообщение об успехе после создания курьера вернулось "):
-            assert '{"ok":true}' == new_courier[1]
+            assert new_courier[1] == '{"ok":true}'
 
     @allure.title("Создание курьера без передачи обязательного поля")
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
@@ -38,14 +38,14 @@ class TestsCreateCourier:
         del return_correct_creds_for_new_courier["password"]
         new_courier = CourierMethods(return_correct_creds_for_new_courier).post_create_courier()
         with allure.step("Проверка 400 статус кода после некорректного создания курьера"):
-            assert 400 == new_courier[0]
+            assert new_courier[0] == 400
 
     @allure.title("409 статус код при создании курьера с указанием уже использованных кредов")
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
     def test_return_correct_error_status_code(self):
         new_courier = requests.post(f"{BASE_URL}{CREATE_COURIER}", data=creds_of_an_already_created_courier)
         with allure.step("Проверка 409 статус кода после некорректного создания курьера"):
-            assert 409 == new_courier.status_code
+            assert new_courier.status_code == 409
 
     @allure.title("Создание курьера с указанием уже использовавшегося логина")
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
@@ -55,4 +55,4 @@ class TestsCreateCourier:
         return_correct_creds_for_new_courier["firstName"] = "223ada2eda23d2"
         new_courier = CourierMethods(return_correct_creds_for_new_courier).post_create_courier()
         with allure.step("Проверка 409 статус кода после некорректного создания курьера"):
-            assert 409 == new_courier[0]
+            assert new_courier[0] == 409

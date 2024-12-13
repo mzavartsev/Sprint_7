@@ -15,7 +15,7 @@ class TestOrder:
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
     def test_create_order(self, color):
         new_order = OrdersMethods(color).post_create_order()
-        assert 201 == new_order[0]
+        assert new_order[0] == 201
 
     @allure.title("Возвращается track key после успешного создания заказа")
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
@@ -27,4 +27,4 @@ class TestOrder:
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
     def test_get_list_of_orders(self):
         get_list = OrdersMethods().get_get_order_info()
-        assert 200 == get_list[0]
+        assert get_list[0] == 200
