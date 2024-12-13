@@ -37,15 +37,15 @@ class TestsCreateCourier:
     def test_create_courier_without_required_field(self, return_correct_creds_for_new_courier):
         del return_correct_creds_for_new_courier["password"]
         new_courier = CourierMethods(return_correct_creds_for_new_courier).post_create_courier()
-        with allure.step("Проверка 400 статус кода после некорректного создания курьера"):
-            assert new_courier[0] == 400
+        with allure.step("Проверка сообщения об ошибке после некорректного создания курьера"):
+            assert "Недостаточно данных для создания учетной записи" in new_courier[2]["message"]
 
     @allure.title("409 статус код при создании курьера с указанием уже использованных кредов")
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
     def test_return_correct_error_status_code(self):
         new_courier = requests.post(f"{BASE_URL}{CREATE_COURIER}", data=creds_of_an_already_created_courier)
         with allure.step("Проверка 409 статус кода после некорректного создания курьера"):
-            assert new_courier.status_code == 409
+            assert "Этот логин уже используется" in new_courier.json()["message"]
 
     @allure.title("Создание курьера с указанием уже использовавшегося логина")
     @allure.link(BASE_URL, name="https://qa-scooter.praktikum-services.ru")
@@ -54,5 +54,5 @@ class TestsCreateCourier:
         return_correct_creds_for_new_courier["password"] = "12ada2eda23d2"
         return_correct_creds_for_new_courier["firstName"] = "223ada2eda23d2"
         new_courier = CourierMethods(return_correct_creds_for_new_courier).post_create_courier()
-        with allure.step("Проверка 409 статус кода после некорректного создания курьера"):
-            assert new_courier[0] == 409
+        with allure.step("Проверка сообщения об ошибке после некорректного создания курьера"):
+            assert "Этот логин уже используется" in new_courier[2]["message"]

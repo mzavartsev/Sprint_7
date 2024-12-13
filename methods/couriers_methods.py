@@ -11,7 +11,7 @@ class CourierMethods:
     def post_create_courier(self):
         with allure.step("Создание курьера"):
             self.create_courier = requests.post(f"{BASE_URL}{CREATE_COURIER}", data=self.courier_data)
-            return self.create_courier.status_code, self.create_courier.text
+            return self.create_courier.status_code, self.create_courier.text, self.create_courier.json()
 
     def post_login_courier(self):
         with allure.step("Авторизация курьера"):
