@@ -1,1 +1,0 @@
-{"uuid": "9a7bb0b3-3fae-4634-8124-0b71bd541a59", "children": ["4527ca2d-e166-44b3-9451-55d8507bf667"], "befores": [{"name": "create_courier", "status": "passed", "steps": [{"name": "Создание курьера", "status": "passed", "start": 1734079799048, "stop": 1734079799127}], "start": 1734079799048, "stop": 1734079799127}], "start": 1734079799048, "stop": 1734079799378}
